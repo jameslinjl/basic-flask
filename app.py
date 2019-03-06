@@ -116,8 +116,10 @@ def handle_user_get():
         return create_server_error_response('Something went wrong trying to read from the mysql database', status=503)
 
 
-@app.route('/user', methods=['GET', 'POST'])
+@app.route('/user', methods=['GET', 'POST', 'OPTIONS'])
 def handle_user():
+    if request.method == 'OPTIONS':
+        return Response(response='', status=200, headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth'})
     if request.method == 'POST':
         return handle_user_post(request.get_data())
     if 'username' in request.args:
@@ -236,6 +238,7 @@ def handle_todo_item_with_id_get(todo_item_id, user_id):
     except:
         return create_server_error_response('Something went wrong trying to write to the mysql database', status=503)
     return create_success_response(transform_db_to_api(results[0]))
+
 
 @app.route('/todo-item/<int:id>', methods=['GET', 'PUT', 'DELETE'])
 def handle_todo_item_with_id(id):
