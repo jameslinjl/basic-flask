@@ -119,7 +119,7 @@ def handle_user_get():
 @app.route('/user', methods=['GET', 'POST', 'OPTIONS'])
 def handle_user():
     if request.method == 'OPTIONS':
-        return Response(response='', status=200, headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth'})
+        return Response(response='', status=200, headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth,content-type'})
     if request.method == 'POST':
         return handle_user_post(request.get_data())
     if 'username' in request.args:
@@ -163,7 +163,7 @@ def handle_todo_item_get(user_id):
 @app.route('/todo-item', methods=['GET', 'POST', 'OPTIONS'])
 def handle_todo_item():
     if request.method == 'OPTIONS':
-        return Response(response='', status=200, headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth'})
+        return Response(response='', status=200, headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth,content-type'})
     if AUTH_COOKIE_NAME not in request.cookies:
         return create_client_error_response('The todo-item service requires authentication. See the auth service.', status=401)
     username = b64decode(request.cookies[AUTH_COOKIE_NAME].encode(
@@ -245,7 +245,7 @@ def handle_todo_item_with_id_get(todo_item_id, user_id):
 @app.route('/todo-item/<int:id>', methods=['GET', 'PUT', 'DELETE', 'OPTIONS'])
 def handle_todo_item_with_id(id):
     if request.method == 'OPTIONS':
-        return Response(response='', status=200, headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth'})
+        return Response(response='', status=200, headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth,content-type'})
     if AUTH_COOKIE_NAME not in request.cookies:
         return create_client_error_response('The todo-item service requires authentication. See the auth service.', status=401)
     username = b64decode(request.cookies[AUTH_COOKIE_NAME].encode(
@@ -269,7 +269,7 @@ def handle_todo_item_with_id(id):
 @app.route('/auth', methods=['POST', 'OPTIONS'])
 def handle_auth():
     if request.method == 'OPTIONS':
-        return Response(response='', status=200, headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth'})
+        return Response(response='', status=200, headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth, content-type'})
     try:
         data_json = json.loads(request.get_data())
     except:
