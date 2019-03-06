@@ -160,8 +160,10 @@ def handle_todo_item_get(user_id):
     return create_success_response(list(map(transform_db_to_api, results)))
 
 
-@app.route('/todo-item', methods=['GET', 'POST'])
+@app.route('/todo-item', methods=['GET', 'POST', 'OPTIONS'])
 def handle_todo_item():
+    if request.method == 'OPTIONS':
+        return Response(response='', status=200, headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth'})
     if AUTH_COOKIE_NAME not in request.cookies:
         return create_client_error_response('The todo-item service requires authentication. See the auth service.', status=401)
     username = b64decode(request.cookies[AUTH_COOKIE_NAME].encode(
@@ -240,8 +242,10 @@ def handle_todo_item_with_id_get(todo_item_id, user_id):
     return create_success_response(transform_db_to_api(results[0]))
 
 
-@app.route('/todo-item/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@app.route('/todo-item/<int:id>', methods=['GET', 'PUT', 'DELETE', 'OPTIONS'])
 def handle_todo_item_with_id(id):
+    if request.method == 'OPTIONS':
+        return Response(response='', status=200, headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth'})
     if AUTH_COOKIE_NAME not in request.cookies:
         return create_client_error_response('The todo-item service requires authentication. See the auth service.', status=401)
     username = b64decode(request.cookies[AUTH_COOKIE_NAME].encode(
@@ -262,8 +266,10 @@ def handle_todo_item_with_id(id):
     return handle_todo_item_with_id_get(id, user_id)
 
 
-@app.route('/auth', methods=['POST'])
+@app.route('/auth', methods=['POST', 'OPTIONS'])
 def handle_auth():
+    if request.method == 'OPTIONS':
+        return Response(response='', status=200, headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth'})
     try:
         data_json = json.loads(request.get_data())
     except:
