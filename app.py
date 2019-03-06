@@ -64,15 +64,15 @@ def read_data(sql_command, data):
 
 
 def create_success_response(data, status=200):
-    return Response(json.dumps(data), status=status, mimetype='application/json')
+    return Response(json.dumps(data), status=status, mimetype='application/json', headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth'})
 
 
 def create_server_error_response(error_message, status=500):
-    return Response(json.dumps({'error': error_message, 'note': 'contact James if you see this because you never should'}), status=status, mimetype='application/json')
+    return Response(json.dumps({'error': error_message, 'note': 'contact James if you see this because you never should'}), status=status, mimetype='application/json', headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth'})
 
 
 def create_client_error_response(error_message, status=400):
-    return Response(json.dumps({'error': error_message}), status=status, mimetype='application/json')
+    return Response(json.dumps({'error': error_message}), status=status, mimetype='application/json', headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth'})
 
 
 def handle_user_post(data):
