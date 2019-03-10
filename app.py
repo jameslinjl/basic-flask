@@ -165,13 +165,16 @@ def handle_todo_item():
     if request.method == 'OPTIONS':
         return Response(response='', status=200, headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth,content-type,Set-Cookie'})
     username = ''
-    if AUTH_COOKIE_NAME in request.cookies:
-        username = b64decode(request.cookies[AUTH_COOKIE_NAME].encode(
-            'utf-8')).decode('utf-8')
-    elif AUTH_COOKIE_NAME in request.headers:
-        username = b64decode(request.headers[AUTH_COOKIE_NAME].encode(
-            'utf-8')).decode('utf-8')
-    else:
+    try:
+        if AUTH_COOKIE_NAME in request.cookies:
+            username = b64decode(request.cookies[AUTH_COOKIE_NAME].encode(
+                'utf-8')).decode('utf-8')
+        elif AUTH_COOKIE_NAME in request.headers:
+            username = b64decode(request.headers[AUTH_COOKIE_NAME].encode(
+                'utf-8')).decode('utf-8')
+        else:
+            return create_client_error_response('The todo-item service requires authentication. See the auth service.', status=401)
+    except:
         return create_client_error_response('The todo-item service requires authentication. See the auth service.', status=401)
 
     try:
@@ -252,13 +255,16 @@ def handle_todo_item_with_id(id):
     if request.method == 'OPTIONS':
         return Response(response='', status=200, headers={'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'sillyauth,content-type,Set-Cookie'})
     username = ''
-    if AUTH_COOKIE_NAME in request.cookies:
-        username = b64decode(request.cookies[AUTH_COOKIE_NAME].encode(
-            'utf-8')).decode('utf-8')
-    elif AUTH_COOKIE_NAME in request.headers:
-        username = b64decode(request.headers[AUTH_COOKIE_NAME].encode(
-            'utf-8')).decode('utf-8')
-    else:
+    try:
+        if AUTH_COOKIE_NAME in request.cookies:
+            username = b64decode(request.cookies[AUTH_COOKIE_NAME].encode(
+                'utf-8')).decode('utf-8')
+        elif AUTH_COOKIE_NAME in request.headers:
+            username = b64decode(request.headers[AUTH_COOKIE_NAME].encode(
+                'utf-8')).decode('utf-8')
+        else:
+            return create_client_error_response('The todo-item service requires authentication. See the auth service.', status=401)
+    except:
         return create_client_error_response('The todo-item service requires authentication. See the auth service.', status=401)
 
     try:
